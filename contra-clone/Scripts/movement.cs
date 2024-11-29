@@ -7,10 +7,10 @@ public partial class movement : CharacterBody2D
     public float PlayerSpeed = 500f;
 
     [Export]
-    public const float JumpVelocity = -500f;
+    public float JumpVelocity = -500f;
 
     [Export]
-    public const float Gravity = 550f;
+    public float Gravity = 550f;
 
     // Physics update loop
     public override void _PhysicsProcess(double delta)
