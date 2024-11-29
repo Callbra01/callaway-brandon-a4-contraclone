@@ -7,10 +7,10 @@ public partial class movement : CharacterBody2D
     public float PlayerSpeed = 500f;
 
     [Export]
-    public const float jumpForce = -500f;
+    public const float JumpVelocity = -500f;
 
     [Export]
-    public const float gravity = 550f;
+    public const float Gravity = 550f;
 
     // Physics update loop
     public override void _PhysicsProcess(double delta)
@@ -20,7 +20,7 @@ public partial class movement : CharacterBody2D
         // Handle jumping
         if (Input.IsActionJustPressed("jump") && IsOnFloor())
         {
-            _targetVelocity.Y = jumpForce;
+            _targetVelocity.Y = JumpVelocity;
         }
 
         // Handle horizontal velocity
@@ -40,7 +40,7 @@ public partial class movement : CharacterBody2D
         // Apply gravity if player is in air
         if (!IsOnFloor())
         {
-            _targetVelocity.Y += gravity * (float)delta;
+            _targetVelocity.Y += Gravity * (float)delta;
         }
 
         Velocity = _targetVelocity;
