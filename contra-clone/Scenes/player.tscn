@@ -1,3 +1,40 @@
-[gd_scene format=3 uid="uid://de1ckahjgn5ci"]
+[gd_scene load_steps=5 format=3 uid="uid://de1ckahjgn5ci"]
 
-[node name="Player" type="Node2D"]
+[ext_resource type="Script" path="res://addons/2d_shapes/shapes/Rectangle.gd" id="2_c4n07"]
+[ext_resource type="Script" path="res://Scripts/movement.cs" id="2_ykuiq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7udfq"]
+size = Vector2(100, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ovuf"]
+size = Vector2(100, 100)
+
+[node name="Scene" type="Node2D"]
+
+[node name="TestPlatform" type="Node2D" parent="."]
+position = Vector2(645, 481)
+scale = Vector2(12.605, 1)
+
+[node name="Rectangle" type="Node2D" parent="TestPlatform"]
+position = Vector2(0.000183105, 0)
+script = ExtResource("2_c4n07")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="TestPlatform"]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestPlatform/StaticBody2D"]
+shape = SubResource("RectangleShape2D_7udfq")
+metadata/_edit_lock_ = true
+
+[node name="Player" type="CharacterBody2D" parent="."]
+script = ExtResource("2_ykuiq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_1ovuf")
+metadata/_edit_lock_ = true
+
+[node name="Rectangle" type="Node2D" parent="Player"]
+script = ExtResource("2_c4n07")
+fill_color = Color(0.243533, 0.65, 0.2145, 1)
+metadata/_edit_lock_ = true
