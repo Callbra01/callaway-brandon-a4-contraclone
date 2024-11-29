@@ -7,7 +7,7 @@
 size = Vector2(100, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ovuf"]
-size = Vector2(100, 100)
+size = Vector2(100, 26)
 
 [node name="Scene" type="Node2D"]
 
@@ -27,10 +27,29 @@ metadata/_edit_lock_ = true
 shape = SubResource("RectangleShape2D_7udfq")
 metadata/_edit_lock_ = true
 
+[node name="TestPlatform2" type="Node2D" parent="."]
+position = Vector2(1601, 263)
+rotation = -0.359538
+scale = Vector2(12.605, 1)
+
+[node name="Rectangle" type="Node2D" parent="TestPlatform2"]
+position = Vector2(0.000183105, 0)
+script = ExtResource("2_c4n07")
+fill_color = Color(1, 0.43, 0.43, 1)
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="TestPlatform2"]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestPlatform2/StaticBody2D"]
+shape = SubResource("RectangleShape2D_7udfq")
+metadata/_edit_lock_ = true
+
 [node name="Player" type="CharacterBody2D" parent="."]
 script = ExtResource("2_ykuiq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 37)
 shape = SubResource("RectangleShape2D_1ovuf")
 metadata/_edit_lock_ = true
 

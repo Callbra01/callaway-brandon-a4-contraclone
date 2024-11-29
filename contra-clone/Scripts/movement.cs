@@ -3,54 +3,47 @@ using System;
 
 public partial class movement : CharacterBody2D
 {
-	[Export]
-	public float Speed = 300.0f;
+    [Export]
+    public float PlayerSpeed = 500f;
 
     [Export]
-    public float JumpVelocity = -120.0f;
+    public const float jumpForce = -500f;
 
     [Export]
-    public int FallAcceleration { get; set; } = 400;
-
-    private Vector2 _targetVelocity = Vector2.Zero;
+    public const float gravity = 550f;
 
     // Physics update loop
     public override void _PhysicsProcess(double delta)
     {
-        var direction = Vector2.Zero;
+        Vector2 _targetVelocity = Velocity;
 
-        // Modify velocity based on input
-        if (Input.IsActionPressed("move_right"))
+        // Handle jumping
+        if (Input.IsActionJustPressed("jump") && IsOnFloor())
         {
-            direction.X += 1.0f;
+            _targetVelocity.Y = jumpForce;
         }
+
+        // Handle horizontal velocity
         if (Input.IsActionPressed("move_left"))
         {
-            direction.X -= 1.0f;
+            _targetVelocity.X = -PlayerSpeed;
         }
-
-        // Update target velocity
-        _targetVelocity = direction * Speed;
-
-        // Apply gravity if player is in air, otherwise allow player to jump
-        if (!IsOnFloor())
+        else if (Input.IsActionPressed("move_right"))
         {
-            _targetVelocity.Y += FallAcceleration * 75 * (float)delta;
+            _targetVelocity.X = PlayerSpeed;
         }
         else
         {
-            //_targetVelocity.Y = 0;
-            if (Input.IsActionPressed("jump"))
-            {
-                _targetVelocity.Y += JumpVelocity * 100;
-            }
+            _targetVelocity.X = 0;
         }
-        GD.Print(_targetVelocity.Y);
 
-        // Apply targetVelocity
+        // Apply gravity if player is in air
+        if (!IsOnFloor())
+        {
+            _targetVelocity.Y += gravity * (float)delta;
+        }
+
         Velocity = _targetVelocity;
         MoveAndSlide();
     }
-
-
 }
