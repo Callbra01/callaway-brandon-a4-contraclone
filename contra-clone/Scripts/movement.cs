@@ -12,15 +12,16 @@ public partial class movement : CharacterBody2D
     [Export]
     public float Gravity = 150f;
 
-    public bool playerFacingRight = true;
-
     Node2D weapon;
     CollisionShape2D jumpCollisionShape;
+
+    public bool playerFacingRight = true;
+
     Vector2 weaponPosition = new Vector2(60, -18);
 
+    // Vars for platform traversal
     bool isPhasing = false;
     float phaseTimer = 0;
-
 
     public override void _Ready()
     {
@@ -30,6 +31,7 @@ public partial class movement : CharacterBody2D
 
     public override void _Process(double delta)
     {
+        // TODO: Swap sprite and weapon position side
         if (playerFacingRight)
         {
             weapon.Position = weaponPosition;
@@ -39,29 +41,7 @@ public partial class movement : CharacterBody2D
             weapon.Position = new Vector2(-weaponPosition.X, weaponPosition.Y);
         }
 
-        HandleCollisionBoxes(delta);
-    }
-
-    void HandleCollisionBoxes(double delta)
-    {
-        if (isPhasing && phaseTimer < 0.5f)
-        {
-            jumpCollisionShape.Disabled = true;
-            phaseTimer += (float)delta;
-        }
-        else
-        {
-            jumpCollisionShape.Disabled = false;
-            isPhasing = false;
-            ResetPhaseTimer();
-        }
-
-        GD.Print(jumpCollisionShape.Disabled);
-    }
-
-    void ResetPhaseTimer()
-    {
-        phaseTimer = 0;
+        HandleJumpCollisionBox(delta);
     }
 
     // Physics update loop
@@ -114,5 +94,26 @@ public partial class movement : CharacterBody2D
         // Apply velocity
         Velocity = _targetVelocity;
         MoveAndSlide();
+    }
+
+    void HandleJumpCollisionBox(double delta)
+    {
+        // If player is traveling through a platform, disable jump collision shape, for a given amount of time
+        if (isPhasing && phaseTimer < 0.5f)
+        {
+            jumpCollisionShape.Disabled = true;
+            phaseTimer += (float)delta;
+        }
+        else
+        {
+            jumpCollisionShape.Disabled = false;
+            isPhasing = false;
+            ResetPhaseTimer();
+        }
+    }
+
+    void ResetPhaseTimer()
+    {
+        phaseTimer = 0;
     }
 }
