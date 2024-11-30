@@ -12,7 +12,12 @@ public partial class movement : CharacterBody2D
     [Export]
     public float Gravity = 150f;
 
+    [Export]
+    private PackedScene BasicBulletPrefab;
+
+    [Export]
     Node2D weapon;
+
     CollisionShape2D jumpCollisionShape;
 
     public bool playerFacingRight = true;
@@ -42,6 +47,15 @@ public partial class movement : CharacterBody2D
         }
 
         HandleJumpCollisionBox(delta);
+
+        if (Input.IsActionJustPressed("shoot"))
+        {
+            RigidBody2D bullet = BasicBulletPrefab.Instantiate<RigidBody2D>();
+            weapon.AddChild(bullet);
+            bullet.GlobalPosition = weapon.GlobalPosition;
+            bullet.ApplyForce(new Vector2(15000, 0));
+            
+        }
     }
 
     // Physics update loop

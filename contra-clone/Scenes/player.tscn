@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://de1ckahjgn5ci"]
+[gd_scene load_steps=7 format=3 uid="uid://de1ckahjgn5ci"]
 
 [ext_resource type="Script" path="res://addons/2d_shapes/shapes/Rectangle.gd" id="2_c4n07"]
 [ext_resource type="Script" path="res://Scripts/movement.cs" id="2_ykuiq"]
 [ext_resource type="Script" path="res://Scripts/Weapon.cs" id="3_3g2xk"]
+[ext_resource type="PackedScene" uid="uid://cgf04w0sx6b3u" path="res://Scenes/basicBullet.tscn" id="3_bwt74"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7udfq"]
 size = Vector2(100, 60)
@@ -17,6 +18,7 @@ size = Vector2(100, 100)
 [node name="TestPlatform" type="Node2D" parent="Platforms"]
 position = Vector2(636, 351)
 scale = Vector2(12.605, 1)
+metadata/_edit_lock_ = true
 
 [node name="Rectangle" type="Node2D" parent="Platforms/TestPlatform"]
 position = Vector2(0.000183105, 0)
@@ -25,6 +27,8 @@ metadata/_edit_lock_ = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Platforms/TestPlatform"]
 scale = Vector2(1, 0.6)
+collision_layer = 3
+collision_mask = 3
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/TestPlatform/StaticBody2D"]
@@ -35,6 +39,7 @@ metadata/_edit_lock_ = true
 [node name="TestPlatform2" type="Node2D" parent="Platforms"]
 position = Vector2(636, 599)
 scale = Vector2(12.605, 1)
+metadata/_edit_lock_ = true
 
 [node name="Rectangle" type="Node2D" parent="Platforms/TestPlatform2"]
 position = Vector2(0.000183105, 0)
@@ -43,6 +48,8 @@ metadata/_edit_lock_ = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Platforms/TestPlatform2"]
 scale = Vector2(1, 0.6)
+collision_layer = 3
+collision_mask = 3
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/TestPlatform2/StaticBody2D"]
@@ -50,19 +57,21 @@ position = Vector2(0, 23.3333)
 shape = SubResource("RectangleShape2D_7udfq")
 metadata/_edit_lock_ = true
 
-[node name="Player" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("weapon")]
 z_index = 1
 script = ExtResource("2_ykuiq")
 JumpVelocity = 100.0
+BasicBulletPrefab = ExtResource("3_bwt74")
+weapon = NodePath("Weapon")
+
+[node name="TempSprite" type="Node2D" parent="Player"]
+script = ExtResource("2_c4n07")
+fill_color = Color(0.243533, 0.65, 0.2145, 1)
+metadata/_edit_lock_ = true
 
 [node name="JumpCollisionBox" type="CollisionShape2D" parent="Player"]
 shape = SubResource("RectangleShape2D_1ovuf")
 one_way_collision = true
-metadata/_edit_lock_ = true
-
-[node name="Rectangle" type="Node2D" parent="Player"]
-script = ExtResource("2_c4n07")
-fill_color = Color(0.243533, 0.65, 0.2145, 1)
 metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
