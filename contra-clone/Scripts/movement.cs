@@ -15,8 +15,7 @@ public partial class movement : CharacterBody2D
     public bool playerFacingRight = true;
 
     Node2D weapon;
-    CollisionShape2D bottomCollisionShape;
-    CollisionShape2D topCollisionShape;
+    CollisionShape2D jumpCollisionShape;
     Vector2 weaponPosition = new Vector2(60, -18);
 
     bool isPhasing = false;
@@ -26,7 +25,7 @@ public partial class movement : CharacterBody2D
     public override void _Ready()
     {
         weapon = GetNode<Node2D>("Weapon");
-        bottomCollisionShape = GetNode<CollisionShape2D>("JumpCollisionBox");
+        jumpCollisionShape = GetNode<CollisionShape2D>("JumpCollisionBox");
     }
 
     public override void _Process(double delta)
@@ -47,17 +46,17 @@ public partial class movement : CharacterBody2D
     {
         if (isPhasing && phaseTimer < 0.5f)
         {
-            bottomCollisionShape.Disabled = true;
+            jumpCollisionShape.Disabled = true;
             phaseTimer += (float)delta;
         }
         else
         {
-            bottomCollisionShape.Disabled = false;
+            jumpCollisionShape.Disabled = false;
             isPhasing = false;
             ResetPhaseTimer();
         }
 
-        GD.Print(bottomCollisionShape.Disabled);
+        GD.Print(jumpCollisionShape.Disabled);
     }
 
     void ResetPhaseTimer()
