@@ -1,59 +1,83 @@
-[gd_scene load_steps=5 format=3 uid="uid://de1ckahjgn5ci"]
+[gd_scene load_steps=6 format=3 uid="uid://de1ckahjgn5ci"]
 
 [ext_resource type="Script" path="res://addons/2d_shapes/shapes/Rectangle.gd" id="2_c4n07"]
 [ext_resource type="Script" path="res://Scripts/movement.cs" id="2_ykuiq"]
+[ext_resource type="Script" path="res://Scripts/Weapon.cs" id="3_3g2xk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7udfq"]
 size = Vector2(100, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ovuf"]
-size = Vector2(100, 26)
+size = Vector2(100, 100)
 
 [node name="Scene" type="Node2D"]
 
-[node name="TestPlatform" type="Node2D" parent="."]
-position = Vector2(645, 481)
+[node name="Platforms" type="Node" parent="."]
+
+[node name="TestPlatform" type="Node2D" parent="Platforms"]
+position = Vector2(636, 351)
 scale = Vector2(12.605, 1)
 
-[node name="Rectangle" type="Node2D" parent="TestPlatform"]
+[node name="Rectangle" type="Node2D" parent="Platforms/TestPlatform"]
 position = Vector2(0.000183105, 0)
 script = ExtResource("2_c4n07")
 metadata/_edit_lock_ = true
 
-[node name="StaticBody2D" type="StaticBody2D" parent="TestPlatform"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Platforms/TestPlatform"]
+scale = Vector2(1, 0.6)
 metadata/_edit_lock_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestPlatform/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/TestPlatform/StaticBody2D"]
+position = Vector2(0, 23.3333)
 shape = SubResource("RectangleShape2D_7udfq")
 metadata/_edit_lock_ = true
 
-[node name="TestPlatform2" type="Node2D" parent="."]
-position = Vector2(1601, 263)
-rotation = -0.359538
+[node name="TestPlatform2" type="Node2D" parent="Platforms"]
+position = Vector2(636, 599)
 scale = Vector2(12.605, 1)
 
-[node name="Rectangle" type="Node2D" parent="TestPlatform2"]
+[node name="Rectangle" type="Node2D" parent="Platforms/TestPlatform2"]
 position = Vector2(0.000183105, 0)
 script = ExtResource("2_c4n07")
-fill_color = Color(1, 0.43, 0.43, 1)
 metadata/_edit_lock_ = true
 
-[node name="StaticBody2D" type="StaticBody2D" parent="TestPlatform2"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Platforms/TestPlatform2"]
+scale = Vector2(1, 0.6)
 metadata/_edit_lock_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TestPlatform2/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/TestPlatform2/StaticBody2D"]
+position = Vector2(0, 23.3333)
 shape = SubResource("RectangleShape2D_7udfq")
 metadata/_edit_lock_ = true
 
 [node name="Player" type="CharacterBody2D" parent="."]
+z_index = 1
 script = ExtResource("2_ykuiq")
+JumpVelocity = 100.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(0, 37)
+[node name="JumpCollisionBox" type="CollisionShape2D" parent="Player"]
 shape = SubResource("RectangleShape2D_1ovuf")
+one_way_collision = true
 metadata/_edit_lock_ = true
 
 [node name="Rectangle" type="Node2D" parent="Player"]
 script = ExtResource("2_c4n07")
 fill_color = Color(0.243533, 0.65, 0.2145, 1)
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+limit_top = 0
+limit_bottom = 0
+metadata/_edit_lock_ = true
+
+[node name="Weapon" type="Node2D" parent="Player"]
+position = Vector2(59, -18)
+script = ExtResource("3_3g2xk")
+metadata/_edit_lock_ = true
+
+[node name="Rectangle" type="Node2D" parent="Player/Weapon"]
+scale = Vector2(0.614464, 0.2205)
+script = ExtResource("2_c4n07")
+corner_radius = 0.0
+fill_color = Color(0.57, 0.820833, 1, 1)
 metadata/_edit_lock_ = true
