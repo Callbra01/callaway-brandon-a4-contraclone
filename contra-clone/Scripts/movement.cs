@@ -26,7 +26,7 @@ public partial class movement : CharacterBody2D
     public bool playerFacingRight = true;
 
     Vector2 weaponPosition = new Vector2(60, -18);
-    int bulletVelocity = 15000;
+    int bulletVelocity = 7500;
 
     // Vars for platform traversal
     bool isPhasing = false;
@@ -59,9 +59,7 @@ public partial class movement : CharacterBody2D
             RigidBody2D bullet = BasicBulletPrefab.Instantiate<RigidBody2D>();
             bulletPosition.AddChild(bullet);
             bullet.GlobalPosition = weapon.GlobalPosition;
-            //bullet.ApplyForce(new Vector2(bulletVelocity, 0));
-            
-            
+            bullet.ApplyForce(new Vector2(bulletVelocity, 0));
         }
     }
 
@@ -104,13 +102,7 @@ public partial class movement : CharacterBody2D
         {
             _targetVelocity.Y += (Gravity * 10) * (float)delta;
             // TODO: Fix this rotation for jumping (Player shifts left and right on floor)
-            Rotate(_targetVelocity.X * (float)delta * 0.01f);
-        }
-        else
-        {
-            Rotation = 0;
-            _targetVelocity.X = 0;
-            
+            //Rotate(_targetVelocity.X * (float)delta * 0.01f);
         }
 
         // Apply velocity
