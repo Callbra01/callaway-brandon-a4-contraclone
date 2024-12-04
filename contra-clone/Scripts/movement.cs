@@ -13,7 +13,7 @@ public partial class movement : CharacterBody2D
     public float Gravity = 150f;
 
     [Export]
-    private PackedScene BasicBulletPrefab;
+    private PackedScene[] BasicBulletPrefab;
 
     [Export]
     Node2D weapon;
@@ -27,6 +27,7 @@ public partial class movement : CharacterBody2D
 
     Vector2 weaponPosition = new Vector2(60, -18);
     int bulletVelocity = 7500;
+    int maxBulletVelocity = 1300;
 
     // Vars for platform traversal
     bool isPhasing = false;
@@ -56,7 +57,7 @@ public partial class movement : CharacterBody2D
 
         if (Input.IsActionJustPressed("shoot"))
         {
-            RigidBody2D bullet = BasicBulletPrefab.Instantiate<RigidBody2D>();
+            RigidBody2D bullet = BasicBulletPrefab[0].Instantiate<RigidBody2D>();
             bulletPosition.AddChild(bullet);
             bullet.GlobalPosition = weapon.GlobalPosition;
             bullet.ApplyForce(new Vector2(bulletVelocity, 0));

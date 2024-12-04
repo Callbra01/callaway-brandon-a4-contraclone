@@ -1,15 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://de1ckahjgn5ci"]
+[gd_scene load_steps=10 format=3 uid="uid://de1ckahjgn5ci"]
 
 [ext_resource type="Script" path="res://addons/2d_shapes/shapes/Rectangle.gd" id="2_c4n07"]
 [ext_resource type="Script" path="res://Scripts/movement.cs" id="2_ykuiq"]
 [ext_resource type="Script" path="res://Scripts/Weapon.cs" id="3_3g2xk"]
 [ext_resource type="PackedScene" uid="uid://cgf04w0sx6b3u" path="res://Scenes/basicBullet.tscn" id="3_bwt74"]
+[ext_resource type="PackedScene" uid="uid://dube3e1yj3qwl" path="res://Scenes/fireBullet.tscn" id="3_xvj7h"]
+[ext_resource type="Script" path="res://Scripts/FireBulletPowerup.cs" id="6_p61e1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7udfq"]
 size = Vector2(100, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ovuf"]
 size = Vector2(100, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0lk5y"]
 
 [node name="Scene" type="Node2D"]
 
@@ -23,6 +27,7 @@ scale = Vector2(12.605, 1)
 metadata/_edit_lock_ = true
 
 [node name="Rectangle" type="Node2D" parent="Platforms/TestPlatform"]
+z_index = -1
 position = Vector2(0.000183105, 0)
 script = ExtResource("2_c4n07")
 metadata/_edit_lock_ = true
@@ -44,6 +49,7 @@ scale = Vector2(12.605, 1)
 metadata/_edit_lock_ = true
 
 [node name="Rectangle" type="Node2D" parent="Platforms/TestPlatform2"]
+z_index = -1
 position = Vector2(0.000183105, 0)
 script = ExtResource("2_c4n07")
 metadata/_edit_lock_ = true
@@ -61,9 +67,11 @@ metadata/_edit_lock_ = true
 
 [node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("weapon", "bulletPosition")]
 z_index = 1
+collision_layer = 5
+collision_mask = 5
 script = ExtResource("2_ykuiq")
 JumpVelocity = 100.0
-BasicBulletPrefab = ExtResource("3_bwt74")
+BasicBulletPrefab = Array[PackedScene]([ExtResource("3_bwt74"), ExtResource("3_xvj7h")])
 weapon = NodePath("Weapon")
 bulletPosition = NodePath("../BulletParent")
 
@@ -94,4 +102,23 @@ corner_radius = 0.0
 fill_color = Color(0.57, 0.820833, 1, 1)
 metadata/_edit_lock_ = true
 
-[node name="Lob Bullet Powerup" type="Node2D" parent="."]
+[node name="Fire Bullet Powerup" type="Node2D" parent="."]
+position = Vector2(714, 307)
+script = ExtResource("6_p61e1")
+
+[node name="Area2D" type="Area2D" parent="Fire Bullet Powerup"]
+collision_layer = 4
+collision_mask = 4
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fire Bullet Powerup/Area2D"]
+scale = Vector2(3.12, 3.12)
+shape = SubResource("RectangleShape2D_0lk5y")
+metadata/_edit_lock_ = true
+
+[node name="Rectangle" type="Node2D" parent="Fire Bullet Powerup"]
+scale = Vector2(0.64, 0.64)
+script = ExtResource("2_c4n07")
+corner_radius = 25.805
+fill_color = Color(1, 0.987667, 0.26, 1)
+metadata/_edit_lock_ = true
