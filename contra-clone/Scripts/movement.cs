@@ -18,11 +18,15 @@ public partial class movement : CharacterBody2D
     [Export]
     Node2D weapon;
 
+    [Export]
+    Node2D bulletPosition;
+
     CollisionShape2D jumpCollisionShape;
 
     public bool playerFacingRight = true;
 
     Vector2 weaponPosition = new Vector2(60, -18);
+    int bulletVelocity = 15000;
 
     // Vars for platform traversal
     bool isPhasing = false;
@@ -40,10 +44,12 @@ public partial class movement : CharacterBody2D
         if (playerFacingRight)
         {
             weapon.Position = weaponPosition;
+            bulletVelocity = Mathf.Abs(bulletVelocity);
         }
         else
         {
             weapon.Position = new Vector2(-weaponPosition.X, weaponPosition.Y);
+            bulletVelocity = -Mathf.Abs(bulletVelocity);
         }
 
         HandleJumpCollisionBox(delta);
@@ -51,9 +57,10 @@ public partial class movement : CharacterBody2D
         if (Input.IsActionJustPressed("shoot"))
         {
             RigidBody2D bullet = BasicBulletPrefab.Instantiate<RigidBody2D>();
-            weapon.AddChild(bullet);
+            bulletPosition.AddChild(bullet);
             bullet.GlobalPosition = weapon.GlobalPosition;
-            bullet.ApplyForce(new Vector2(15000, 0));
+            //bullet.ApplyForce(new Vector2(bulletVelocity, 0));
+            
             
         }
     }
@@ -76,7 +83,6 @@ public partial class movement : CharacterBody2D
             }
         }
 
-
         // Handle horizontal velocity
         if (Input.IsActionPressed("move_left"))
         {
@@ -98,11 +104,13 @@ public partial class movement : CharacterBody2D
         {
             _targetVelocity.Y += (Gravity * 10) * (float)delta;
             // TODO: Fix this rotation for jumping (Player shifts left and right on floor)
-            //Rotate(_targetVelocity.X * (float)delta * 0.01f);
+            Rotate(_targetVelocity.X * (float)delta * 0.01f);
         }
         else
         {
-            //Rotation = 0;
+            Rotation = 0;
+            _targetVelocity.X = 0;
+            
         }
 
         // Apply velocity
