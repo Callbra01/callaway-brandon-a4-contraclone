@@ -33,6 +33,11 @@ public partial class movement : CharacterBody2D
     bool isPhasing = false;
     float phaseTimer = 0;
 
+    [Export]
+    public int bulletType = 0;
+
+    RandomNumberGenerator rng = new RandomNumberGenerator();
+
     public override void _Ready()
     {
         weapon = GetNode<Node2D>("Weapon");
@@ -55,13 +60,8 @@ public partial class movement : CharacterBody2D
 
         HandleJumpCollisionBox(delta);
 
-        if (Input.IsActionJustPressed("shoot"))
-        {
-            RigidBody2D bullet = BasicBulletPrefab[1].Instantiate<RigidBody2D>();
-            bulletPosition.AddChild(bullet);
-            bullet.GlobalPosition = weapon.GlobalPosition;
-            bullet.ApplyForce(new Vector2(bulletVelocity, 0));
-        }
+        HandleWeapon(delta);
+       
     }
 
     // Physics update loop
@@ -109,6 +109,38 @@ public partial class movement : CharacterBody2D
         // Apply velocity
         Velocity = _targetVelocity;
         MoveAndSlide();
+    }
+
+    void HandleWeapon(double delta)
+    {
+        if (Input.IsActionJustPressed("shoot"))
+        {
+            // Bullet type two is shotgun, and requires special handling
+            if (bulletType != 2)
+            {
+                RigidBody2D bullet = BasicBulletPrefab[bulletType].Instantiate<RigidBody2D>();
+                bulletPosition.AddChild(bullet);
+                bullet.GlobalPosition = weapon.GlobalPosition;
+                bullet.ApplyForce(new Vector2(bulletVelocity, 0));
+            }
+            else
+            {
+                for (int i = 0; i <= 5; i++)
+                {
+                    RigidBody2D bullet = BasicBulletPrefab[bulletType].Instantiate<RigidBody2D>();
+                    bulletPosition.AddChild(bullet);
+                    bullet.GlobalPosition = weapon.GlobalPosition;
+                    if (i < 3)
+                    {
+                        bullet.ApplyForce(new Vector2(bulletVelocity, -3000 * i));
+                    }
+                    else
+                    {
+                        bullet.ApplyForce(new Vector2(bulletVelocity, 3000 * i));
+                    }
+                }
+            }
+        }
     }
 
     void HandleJumpCollisionBox(double delta)

@@ -1,75 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://bupoxecy478v1"]
+[gd_scene load_steps=3 format=3 uid="uid://bupoxecy478v1"]
 
+[ext_resource type="Script" path="res://Scripts/ShotgunBullet.cs" id="1_5wnd5"]
 [ext_resource type="Script" path="res://addons/2d_shapes/shapes/Triangle.gd" id="1_swfi4"]
 
-[node name="Shotgun Bullet" type="Node2D"]
-
-[node name="BulletOne" type="RigidBody2D" parent="."]
+[node name="Shotgun Bullet" type="RigidBody2D"]
 collision_layer = 2
-collision_mask = 2
-metadata/_edit_lock_ = true
+mass = 0.1
+gravity_scale = 0.755
+contact_monitor = true
+max_contacts_reported = 2
+script = ExtResource("1_5wnd5")
 
-[node name="Triangle" type="Node2D" parent="BulletOne"]
+[node name="Triangle" type="Node2D" parent="."]
 scale = Vector2(0.56, 0.56)
 script = ExtResource("1_swfi4")
 size = Vector2(100, 89.282)
 type = 1
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BulletOne"]
-polygon = PackedVector2Array(-30.36, 24.835, 0, -28.105, 30.36, 24.835)
-
-[node name="BulletTwo" type="RigidBody2D" parent="."]
-collision_layer = 2
-collision_mask = 2
+fill_color = Color(1, 0, 0, 1)
 metadata/_edit_lock_ = true
 
-[node name="Triangle" type="Node2D" parent="BulletTwo"]
-scale = Vector2(0.56, 0.56)
-script = ExtResource("1_swfi4")
-size = Vector2(100, 89.282)
-type = 1
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BulletTwo"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-30.36, 24.835, 0, -28.105, 30.36, 24.835)
-
-[node name="BulletThree" type="RigidBody2D" parent="."]
-collision_layer = 2
-collision_mask = 2
 metadata/_edit_lock_ = true
-
-[node name="Triangle" type="Node2D" parent="BulletThree"]
-scale = Vector2(0.56, 0.56)
-script = ExtResource("1_swfi4")
-size = Vector2(100, 89.282)
-type = 1
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BulletThree"]
-polygon = PackedVector2Array(-30.36, 24.835, 0, -28.105, 30.36, 24.835)
-
-[node name="BulletFour" type="RigidBody2D" parent="."]
-collision_layer = 2
-collision_mask = 2
-metadata/_edit_lock_ = true
-
-[node name="Triangle" type="Node2D" parent="BulletFour"]
-scale = Vector2(0.56, 0.56)
-script = ExtResource("1_swfi4")
-size = Vector2(100, 89.282)
-type = 1
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BulletFour"]
-polygon = PackedVector2Array(-30.36, 24.835, 0, -28.105, 30.36, 24.835)
-
-[node name="BulletFive" type="RigidBody2D" parent="."]
-collision_layer = 2
-collision_mask = 2
-metadata/_edit_lock_ = true
-
-[node name="Triangle" type="Node2D" parent="BulletFive"]
-scale = Vector2(0.56, 0.56)
-script = ExtResource("1_swfi4")
-size = Vector2(100, 89.282)
-type = 1
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BulletFive"]
-polygon = PackedVector2Array(-30.36, 24.835, 0, -28.105, 30.36, 24.835)
