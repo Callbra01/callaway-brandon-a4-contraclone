@@ -57,7 +57,7 @@ public partial class movement : CharacterBody2D
 
         if (Input.IsActionJustPressed("shoot"))
         {
-            RigidBody2D bullet = BasicBulletPrefab[0].Instantiate<RigidBody2D>();
+            RigidBody2D bullet = BasicBulletPrefab[1].Instantiate<RigidBody2D>();
             bulletPosition.AddChild(bullet);
             bullet.GlobalPosition = weapon.GlobalPosition;
             bullet.ApplyForce(new Vector2(bulletVelocity, 0));
